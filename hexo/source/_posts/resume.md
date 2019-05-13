@@ -78,7 +78,7 @@ categories: 行政事务
 
 # 技能清单
 
-- 编程语言：Psython/C/Schema/C++/HTML/CSS/assembly
+- 编程语言：Python/C/Schema/C++/HTML/CSS/assembly
 - 操作系统平台: ubuntu/windows/mac
 - 数据库相关：MySQL/SQLite
 - 版本管理：Git
