@@ -1,1 +1,0 @@
-# lancecopper.github.io
