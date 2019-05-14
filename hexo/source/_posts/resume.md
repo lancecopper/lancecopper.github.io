@@ -15,8 +15,8 @@ categories: 行政事务
 # 个人信息
 
  - 易水寒/男/1989 
- - 本科/山东大学生命科学系
- - 研究生/中科院研究生院/海洋研究所/肄业
+ - 本科/985生命科学系
+ - 研究生/中科院研究生院/国内某研究所/肄业
  - 技术博客：http://lance123.com
  - Github：http://github.com/lancecopper
  - 期望职位：python web 后端 / python全栈 / 爬虫岗
