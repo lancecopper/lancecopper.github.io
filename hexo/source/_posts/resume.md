@@ -20,9 +20,19 @@ categories: 行政事务
  - 保险公司私人助理/自学计算机基础 + web技能/(2014~2019)
  - 技术博客：http://lance123.com
  - Github：http://github.com/lancecopper
- - 期望职位：python web 后端 / python全栈 / 爬虫岗 / 测试岗(接受合理加班，接受创业公司)
+ - 期望职位：python web 后端(接受合理加班，接受创业公司)
  - 期望薪资：管吃管住不要钱
  - 期望城市：北京/青岛/杭州/其他任何有合适岗位的城市
+
+# 个人项目和作品
+
+- [在线文字冒险小游戏，web.py框架](https://github.com/lancecopper/gothonweb)
+- [blog网站, python aiohttp框架](https://github.com/lancecopper/awesome_blog)
+- [blog网站, python flask框架](https://github.com/lancecopper/flasky_blog)
+- [逻辑门->CPU->汇编器->虚拟机->编译器->操作系统的整套模拟实现](https://github.com/lancecopper/the_elements_of_computing_systems)
+- [python实现的schema解释器](https://github.com/lancecopper/berkeley_cs61a/tree/master/scheme)
+- [一个小型操作系统](https://github.com/lancecopper/MIT6.828)
+- [一个小型数据库](https://github.com/lancecopper/cmu15445_fall2017/tree/master/sqlite-fall2017)
 
 # 自学经历
 
@@ -62,16 +72,6 @@ C -> 汇编 -> python -> HTML / CSS -> 计算机科学基础(计算机组成原�
 - [python实现的schema解释器](https://github.com/lancecopper/berkeley_cs61a/tree/master/scheme)
 
 - [schema实现的schema解释器](https://github.com/lancecopper/SICP)
-
-# 个人项目和作品
-
-- [在线文字冒险小游戏，web.py框架](https://github.com/lancecopper/gothonweb)
-- [blog网站, python aiohttp框架](https://github.com/lancecopper/awesome_blog)
-- [blog网站, python flask框架](https://github.com/lancecopper/flasky_blog)
-- [逻辑门->CPU->汇编器->虚拟机->编译器->操作系统的整套模拟实现](https://github.com/lancecopper/the_elements_of_computing_systems)
-- [python实现的schema解释器](https://github.com/lancecopper/berkeley_cs61a/tree/master/scheme)
-- [一个小型操作系统](https://github.com/lancecopper/MIT6.828)
-- [一个小型数据库](https://github.com/lancecopper/cmu15445_fall2017/tree/master/sqlite-fall2017)
 
 # 技能清单
 
