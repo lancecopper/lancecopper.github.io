@@ -78,7 +78,7 @@ C -> 汇编 -> python -> HTML / CSS -> 计算机科学基础(计算机组成原�
 - 编程语言：Python/C/Schema/C++/HTML/CSS/assembly
 - 操作系统平台: ubuntu/windows/mac
 - web后端框架: web.py/aiohttp/flask/hexo
-- 前端技能/框架：html/css/javascript/jQuery/Angularjs/Vue.js
+- 前端技能/框架：html/css
 - 数据库相关：MySQL/SQLite
 - 版本管理：Git
 
