@@ -20,7 +20,7 @@ categories: 行政事务
  - 保险公司私人助理/自学计算机基础 + web技能/(2014~2019)
  - 技术博客：http://lance123.com
  - Github：http://github.com/lancecopper
- - 期望职位：python web 后端 / python全栈 / 爬虫岗(接受合理加班，接受创业公司)
+ - 期望职位：python web 后端 / python全栈 / 爬虫岗 / 测试岗(接受合理加班，接受创业公司)
  - 期望薪资：管吃管住不要钱
  - 期望城市：北京/青岛/杭州/其他任何有合适岗位的城市
 
