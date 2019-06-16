@@ -286,6 +286,671 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/06/16/observer/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="lancecopper">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="奇点观测站8012">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                
+                <a href="/2019/06/16/observer/" class="post-title-link" itemprop="url">设计模式系列--observer</a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+
+              
+                
+              
+
+              <time title="Created: 2019-06-16 15:06:28 / Modified: 19:52:06" itemprop="dateCreated datePublished" datetime="2019-06-16T15:06:28+08:00">2019-06-16</time>
+            
+
+            
+              
+
+              
+            
+          </span>
+
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h3 id="适用性"><a href="#适用性" class="headerlink" title="适用性"></a>适用性</h3><p>在以下任一情况下可以使用观察者模式 :</p>
+<ul>
+<li><p>当一个抽象模型有两个方面 , 其中一个方面依赖于另一方面。将这二者封装在独立的对象中以使它们可以各自独立地改变和复用。</p>
+</li>
+<li><p>当对一个对象的改变需要同时改变其它对象 , 而不知道具体有多少对象有待改变。</p>
+</li>
+<li><p>当一个对象必须通知其它对象，而它又不能假定其它对象是谁。换言之 , 你不希望这些对象是紧密耦合的。</p>
+</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> abc <span class="keyword">import</span> ABCMeta, abstractmethod</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Subject</span><span class="params">()</span>:</span></span><br><span class="line">    <span class="string">'''</span></span><br><span class="line"><span class="string">    Subject 知道它的 Observer。可以有任意多个Observer观察同一个Subject。</span></span><br><span class="line"><span class="string">    提供注册和删除Observer对象的接口。</span></span><br><span class="line"><span class="string">    '''</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self)</span>:</span></span><br><span class="line">        self.__observers = []</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">attach</span><span class="params">(self, observer)</span>:</span></span><br><span class="line">        self.__observers.append(observer)</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">detatch</span><span class="params">(self, observer)</span>:</span></span><br><span class="line">        self.__observers.remove(observer)</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">notify</span><span class="params">(self)</span>:</span></span><br><span class="line">        <span class="keyword">for</span> o <span class="keyword">in</span> self.__observers:</span><br><span class="line">            o.update()</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Observer</span><span class="params">()</span>:</span></span><br><span class="line">    <span class="string">'''</span></span><br><span class="line"><span class="string">    为那些在Subject发生改变时需获得通知的对象定义一个更新接口。</span></span><br><span class="line"><span class="string">    用abc库实现了一个简单的抽象类。</span></span><br><span class="line"><span class="string">    '''</span></span><br><span class="line">    __metaclass__ = ABCMeta</span><br><span class="line">    </span><br><span class="line"><span class="meta">    @abstractmethod</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">update</span><span class="params">(self)</span>:</span></span><br><span class="line">        <span class="keyword">pass</span></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">ConcreteSubject</span><span class="params">(Subject)</span>:</span></span><br><span class="line">    <span class="string">'''</span></span><br><span class="line"><span class="string">    将有关状态存入具体的Observer对象</span></span><br><span class="line"><span class="string">    在具体主题的内部状态改变时，给所有登记过的Observer发出通知</span></span><br><span class="line"><span class="string">    '''</span></span><br><span class="line"><span class="meta">    @property</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">status</span><span class="params">(self)</span>:</span></span><br><span class="line">        <span class="keyword">return</span> self._status</span><br><span class="line"><span class="meta">    @status.setter</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">status</span><span class="params">(self, value)</span>:</span></span><br><span class="line">        self._status = value</span><br><span class="line">        self.notify()</span><br><span class="line">    </span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">ConcreteObserver</span><span class="params">(Observer)</span>:</span></span><br><span class="line">    <span class="string">'''</span></span><br><span class="line"><span class="string">    维护一个指向ConcreteSubject对象的引用。</span></span><br><span class="line"><span class="string">    存储有关状态，这些状态应与目标的状态保持一致。</span></span><br><span class="line"><span class="string">    实现Observer的更新接口以使自身状态与目标的状态保持一致。</span></span><br><span class="line"><span class="string">    '''</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self, subject, name)</span>:</span></span><br><span class="line">        self.subject = subject                      <span class="comment"># 指向ConcreteSubject的引用</span></span><br><span class="line">        self.name = name                            </span><br><span class="line">        self.objserver_status = <span class="literal">None</span>                <span class="comment"># object status </span></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">update</span><span class="params">(self)</span>:</span>                               <span class="comment"># 覆写抽象Object类，否则无法实例化</span></span><br><span class="line">        self.objserver_status = self.subject.status</span><br><span class="line">        print(<span class="string">"observer %s status changed to %s: "</span> % (self.name, self.objserver_status))</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">'__main__'</span>:</span><br><span class="line">    s = ConcreteSubject()</span><br><span class="line">    s.attach(ConcreteObserver(s, <span class="string">"X"</span>))</span><br><span class="line">    s.attach(ConcreteObserver(s, <span class="string">"Y"</span>))</span><br><span class="line">    s.attach(ConcreteObserver(s, <span class="string">"Z"</span>))</span><br><span class="line"></span><br><span class="line">    s.status = <span class="string">"A"</span></span><br><span class="line">    s.status = <span class="string">"B"</span></span><br></pre></td></tr></table></figure>
+
+          
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/06/10/jinjia简明教程/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="lancecopper">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="奇点观测站8012">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                
+                <a href="/2019/06/10/jinjia简明教程/" class="post-title-link" itemprop="url">Hello World</a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+
+              
+                
+              
+
+              <time title="Created: 2019-06-10 10:03:04 / Modified: 10:31:46" itemprop="dateCreated datePublished" datetime="2019-06-10T10:03:04+08:00">2019-06-10</time>
+            
+
+            
+              
+
+              
+            
+          </span>
+
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="引文"><a href="#引文" class="headerlink" title="引文"></a>引文</h2><p>没啥好说的，就是想整理个快速入门手册。</p>
+<h2 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h2><p>[jinjia2模板文档](<a href="http://jinja.pocoo.org/docs/2.10/" target="_blank" rel="noopener">http://jinja.pocoo.org/docs/2.10/</a></p>
+<h2 id="Basic-API-Usage"><a href="#Basic-API-Usage" class="headerlink" title="Basic API Usage"></a>Basic API Usage</h2><ul>
+<li>jinja2目前已经加入对python version3的支持</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="keyword">from</span> jinja2 <span class="keyword">import</span> Template</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>template = Template(<span class="string">'Hello &#123;&#123; name &#125;&#125;!'</span>)</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>template.render(name=<span class="string">'lancecopper'</span>)</span><br><span class="line"><span class="string">'Hello lancecopper!'</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> jinja2 <span class="keyword">import</span> Environment, PackageLoader, select_autoescape</span><br><span class="line">env = Environment(</span><br><span class="line">    loader=PackageLoader(<span class="string">'yourapplication'</span>, <span class="string">'templates'</span>),</span><br><span class="line">    autoescape=select_autoescape([<span class="string">'html'</span>, <span class="string">'xml'</span>])</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+
+          
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/05/31/设计模式攻略纪要/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="lancecopper">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="奇点观测站8012">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                
+                <a href="/2019/05/31/设计模式攻略纪要/" class="post-title-link" itemprop="url">设计模式攻略纪要</a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+
+              
+                
+              
+
+              <time title="Created: 2019-05-31 09:30:08" itemprop="dateCreated datePublished" datetime="2019-05-31T09:30:08+08:00">2019-05-31</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Edited on</span>
+                
+                <time title="Modified: 2019-06-16 14:54:09" itemprop="dateModified" datetime="2019-06-16T14:54:09+08:00">2019-06-16</time>
+              
+            
+          </span>
+
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="引文"><a href="#引文" class="headerlink" title="引文"></a>引文</h2><p>昨天面了家挺有意思的公司，技术负责人蛮有极客范儿的，重点是我发现我的知识结构缺了一块儿–设计模式。立刻开坑搞。</p>
+<h2 id="目录"><a href="#目录" class="headerlink" title="目录"></a>目录</h2><ul>
+<li><p>待办: 此处应该添加页内跳转锚点</p>
+</li>
+<li><p>Abstract Factory(3.1)</p>
+</li>
+<li><p>Adapter(4.1)</p>
+</li>
+<li><p>Bridge(4.2)</p>
+</li>
+<li><p>Builder(3.2)</p>
+</li>
+<li><p>Chain of Responsibility(5.1)</p>
+</li>
+<li><p>Command(5.2)</p>
+</li>
+<li><p>Composite(4.3)</p>
+</li>
+<li><p>Decorator(4.4)</p>
+</li>
+<li><p>Facade(4.5)</p>
+</li>
+<li><p>Factory Method(3.3)</p>
+</li>
+<li><p>Flyweight(4.6)</p>
+</li>
+<li><p>Interpreter(5.3)</p>
+</li>
+<li><p>Iterator(5.4)</p>
+</li>
+<li><p>Mediator(5.5)</p>
+</li>
+<li><p>Memento(5.6)</p>
+</li>
+<li><p>Observer(5.7)</p>
+</li>
+<li><p>Prototype(3.4)</p>
+</li>
+<li><p>Proxy(4.7)</p>
+</li>
+<li><p>Singleton(3.5)</p>
+</li>
+<li><p>State(5.8)</p>
+</li>
+<li><p>Strategy(5.9)</p>
+</li>
+<li><p>Template Method(5.10)</p>
+</li>
+</ul>
+<p>## </p>
+<p><a href="#jump">“jump”</a></p>
+<p><span id="jump">Hello World</span></p>
+
+          
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/05/29/flasky_souce_code_profile/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="lancecopper">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="奇点观测站8012">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                
+                <a href="/2019/05/29/flasky_souce_code_profile/" class="post-title-link" itemprop="url">flasky源码分析 by lancecopper</a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+
+              
+                
+              
+
+              <time title="Created: 2019-05-29 12:20:38" itemprop="dateCreated datePublished" datetime="2019-05-29T12:20:38+08:00">2019-05-29</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Edited on</span>
+                
+                <time title="Modified: 2019-06-10 11:44:55" itemprop="dateModified" datetime="2019-06-10T11:44:55+08:00">2019-06-10</time>
+              
+            
+          </span>
+
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><ul>
+<li>基于flask_0.1</li>
+</ul>
+<p>## </p>
+
+          
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/05/13/resume/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -703,7 +1368,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">2</span>
+                    <span class="site-state-item-count">6</span>
                     <span class="site-state-item-name">posts</span>
                   </a>
                 </div>
